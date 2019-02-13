@@ -1,4 +1,5 @@
 var schedule = [];
+var currentBell = {};
 
 function checkTime(i) {
     if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
@@ -21,15 +22,18 @@ function parseTime() {
 }
 
 
-function scheduleTimer(nextBell) {
-    schedule.push(nextBell);
+function scheduleTimer(newBell) {
+    schedule.push(newBell);
     schedule.sort(function(a, b) { 
         return a.time > b.time;
     });
+
+    // replace next bell if not the latest
+    if (currentBell != schedule[schedule.length-1]) {
+        currentBell = schedule[schedule.length-1];
+        startCountdown(currentBell);
+    }
     refreshScheduleList();
-
-    startCountdown(schedule.pop())
-
 }
 
 function refreshScheduleList() {
@@ -64,13 +68,13 @@ function showClock() {
     var t = setTimeout(showClock, 500);
 };
 
-function startCountdown(nextBell) {
+function startCountdown(currentBell) {
     var x = setInterval(function() {
 
     // Get current  time
     var now = new Date().getTime();
     // Find the distance between now and the count down date
-    var distance = nextBell.time.getTime() - now;
+    var distance = currentBell.time.getTime() - now;
  
     // Time calculations for days, hours, minutes and seconds
     // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -82,13 +86,14 @@ function startCountdown(nextBell) {
         var timer = document.getElementById("timer");
         timer.innerHTML =   hours + "h " + minutes + "m " + seconds + "s ";
         var name = document.getElementById("timeName");
-        name.innerHTML = "next bell: " + nextBell.name;
+        name.innerHTML = "next bell: " + currentBell.name;
     // If the count down is over, write some text 
     if (distance < 0) {
         clearInterval(x);
         timer.innerHTML = "";
         name.innerHTML = "";
         ringAlarm();
+        currentBell == null;
         }
     }, 1000);
     showClock();
