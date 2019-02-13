@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+p {
+  text-align: center;
+  font-size: 60px;
+  margin-top: 0px;
+}
+</style>
+<script src="src/ticker.js"></script>
+
+</head>
+<body>
+
+  <div id="timeName">
+  </div>
+  <div id="timer"></div>
+
+
+  <p id="clock"></p>
+
+
+  <div>
+      <h3>Bell Schedule</h3>
+  <ul id="schedule"></ul>
+  </div>
+
+
+  <label for="t">Countdown to: </label>
+  <input id="t" type="time" name="appt-time">
+  <label for="name">name</label>
+  <input type="text" name="name" id="name">
+  <input type="button" value="Add Timer" onclick="parseTime()">
+
+  <script>showClock()</script>
+  
+</body>
+</html>
+
+
